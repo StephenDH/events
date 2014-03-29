@@ -82,3 +82,33 @@ class Img extends HtmlVoidElement{
 		parent::__construct($attributes);
 	}
 }
+
+class MyList extends HtmlElement{
+	public function __construct($items = array(), $class, $ordered = false, $attributes = array()){
+		$content="";
+		if($ordered){
+			$this->tag ="ol";	
+		}else{
+			$this->tag ="ul";
+		}
+		$attributes["class"] = $class;
+
+		foreach ($items as $value) {
+			$content .= $value;
+		}
+		parent::__construct($content,$attributes);
+	}
+}
+
+class ListItem extends HtmlElement{
+	public function __construct($content, $class, $listTag = "li", $href = "", $attributes = array()){
+		$this->tag = $listTag;
+		if($listTag=="a"){
+			$attributes["href"] = $href;	
+		}
+		$attributes["class"] = $class;
+		parent::__construct($content, $attributes);
+	}
+}
+
+
