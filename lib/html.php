@@ -101,7 +101,7 @@ class MyList extends HtmlElement{
 }
 
 class ListItem extends HtmlElement{
-	public function __construct($content, $class, $listTag = "li", $href = "", $attributes = array()){
+	public function __construct($content, $class, $href = "", $listTag = "li", $attributes = array()){
 		$this->tag = $listTag;
 		if($listTag=="a"){
 			$attributes["href"] = $href;	
@@ -111,4 +111,33 @@ class ListItem extends HtmlElement{
 	}
 }
 
+class Event{
+	public function __construct($title, $details, $date, $time, $website, $email, $full = false){//$picture,
+		//$this->picture = $picture;
+		$this->title = $title;
+		$this->details = $details;
+		$this->date = $date;
+		$this->time = $time;
+		$this->website = $website;
+		$this->email = $email;
+		$this->full = $full;
+	}
 
+	public function __toString(){
+		if($this->full){
+			return "";
+		}else{
+			$shortDetails = string_shorten($this->details, 400);
+			return new ListItem("<h4 class=\"list-group-item-heading\">{$this->title}</h4><p class=\"list-group-item-text\">$shortDetails</p>", "list-group-item", "#", "a")."";
+		}
+		
+	}
+}
+
+function string_shorten($text, $char) {
+    $text = substr($text, 0, $char); //First chop the string to the given character length
+    if(substr($text, 0, strrpos($text, ' '))!='') $text = substr($text, 0, strrpos($text, ' ')); //If there exists any space just before the end of the chopped string take upto that portion only.
+    //In this way we remove any incomplete word from the paragraph
+    $text = $text.'...'; //Add continuation ... sign
+    return $text; //Return the value
+}
