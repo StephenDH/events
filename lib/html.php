@@ -112,8 +112,8 @@ class ListItem extends HtmlElement{
 }
 
 class Event{
-	public function __construct($title, $details, $date, $time, $website, $email, $full = false){//$picture,
-		//$this->picture = $picture;
+	public function __construct($picture, $title, $details, $date, $time, $website, $email, $i, $full = false){
+		$this->picture = $picture;
 		$this->title = $title;
 		$this->details = $details;
 		$this->date = $date;
@@ -128,9 +128,17 @@ class Event{
 			return "";
 		}else{
 			$shortDetails = string_shorten($this->details, 400);
-			return new ListItem("<h4 class=\"list-group-item-heading\">{$this->title}</h4><p class=\"list-group-item-text\">$shortDetails</p>", "list-group-item", "#", "a")."";
+			return new ListItem("<div style=\"height:85px\">
+									<div style=\"width:100%; height:28%;\"><h4 class=\"list-group-item-heading\">{$this->title}</h4></div>
+									<div style=\"width:6%; height:72%; float:left\"><img src=\"$this->picture\" alt=\"$this->picture\" height=\"60\" width=\"60\"></div>
+									<div style=\"width:94%; height:72%; float:right\"><p class=\"list-group-item-text\">$shortDetails</p></div>
+								</div>", "list-group-item", "index.php?event_full={$this->attributes}", "a")."";
 		}
 		
+	}
+
+	public function showFull($full=true){
+		$this->full = $full;
 	}
 }
 
