@@ -1,7 +1,7 @@
 <?php 
-
+	require_once("lib/html.php");
 	error_reporting(E_ALL);   
-	ini_set('display_errors', '1');
+	ini_set('display_errors', 1);
 
 	$host = "localhost";
 	$dbname = "events";
@@ -9,25 +9,67 @@
 	$pass = "";
 
 	$DBH = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+	$DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
-	require_once("lib/html.php");
-	$events = array();
-
-
-	// for($i = 0; $i < 10; $i++){
-	// 	$event = new Event("img_0001.jpg", "Lorem ipsum dolor sit amet.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque fermentum id risus ac dignissim. Donec cursus nulla in gravida rhoncus. Vivamus in leo nunc. Cras eget bibendum ante. Vivamus nec dictum ligula. Vestibulum nec placerat libero, ac semper arcu. Aenean et viverra diam, quis rhoncus massa. Cras lobortis condimentum ultrices. Sed rutrum euismod pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque luctus massa eget blandit porttitor. Vivamus pharetra dui vel neque semper vehicula.", "12/12/1999", "00:00", "wwww.test.be", "test@test.be", $i);
-	// 	array_push($events, $event);
-	// }
-
-	$showResult = !(empty($event_full));
-
-	if ($showResult){
-		$event = $events[$event_full];
-		$event->showFull();
-		$content = $events[$event_full];
-	}else{
-		$content = new MyList($events, "list-group");
+ 	$title ="";
+	if (isset($_POST['title'])) {
+		$title = $_POST['title'];
 	}
+
+	$picture ="";
+	if (isset($_POST['picture'])) {
+		$picture = $_POST['picture'];
+	}
+
+	$details ="";
+	if (isset($_POST['details'])) {
+		$details = $_POST['details'];
+	}
+
+	$datum ="";
+	if (isset($_POST['datum'])) {
+		$datum = $_POST['datum'];
+	}
+
+	$tijd ="";
+	if (isset($_POST['tijd'])) {
+		$tijd = $_POST['tijd'];
+	}
+
+	$website ="";
+	if (isset($_POST['website'])) {
+		$website = $_POST['website'];
+	}
+
+	$email ="";
+	if (isset($_POST['email'])) {
+		$email = $_POST['email'];
+	}
+
+
+
+	$update = !(empty($title) && empty($picture) && empty($details) && empty($date) && empty($time) && empty($website) && empty($email));
+
+	if ($update){
+		//$event = new Event("1", $title, $picture, $details, $datum, $tijd, $website, $email);
+		//$STH = $DBH->query("SELECT id, title, picture, details, date, time, website, email from evenementen");
+		$STH = $DBH->prepare("INSERT INTO evenementen (title, picture, details, datum, tijd, website, email) values (:title, :picture, :details, :datum, :tijd, :website, :email)");
+		//print_r((array)$event);
+		$events_array = array("title"=>$title,"picture"=>$picture,"details"=>$details,"datum"=>$datum,"tijd"=>$tijd,"website"=>$website,"email"=>$email);
+		//print_r($events_array);
+		$STH->execute($events_array);
+	}	
+		// $event = $events[$event_full];
+		// $event->showFull();
+		// $content = $events[$event_full];
+		
+	$content = new Div(
+		//new MyList($events, "list-group") .
+		new Button(
+			new Span("", array("class" => "glyphicon glyphicon-plus")) .
+			" Add"
+		, array("class" => "btn btn-default btn-lg", "type" => "button", "onclick" => "window.location.href='/EventsV2/add_event.php'"))
+	, array("class" => "container"));
 		
  ?>
  <!DOCTYPE html>
@@ -37,10 +79,6 @@
  	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
  </head>
  <body>
- 	<div class = "container"><?php echo $content ?>
- 		<button type="button" onclick="window.location.href='/Events/add_event.php'" class="btn btn-default btn-lg">
-  			<span class="glyphicon glyphicon-plus"></span>Add
-		</button>
-	</div>
+ 	<?php echo $content ?>
  </body>
  </html>

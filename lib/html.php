@@ -49,6 +49,13 @@ class Div extends HtmlElement{
 	}
 }
 
+class Span extends HtmlElement{
+	public function __construct($content, $attributes = array()){
+		$this->tag = "span";
+		parent::__construct($content,$attributes);
+	}
+}
+
 class Button extends HtmlElement{
 	public function __construct($content, $attributes = array()){
 		$this->tag = "button";
@@ -112,9 +119,10 @@ class ListItem extends HtmlElement{
 }
 
 class Event{
-	public function __construct($picture, $title, $details, $date, $time, $website, $email, $i, $full = false){
-		$this->picture = $picture;
+	public function __construct( $id, $title, $picture, $details, $date, $time, $website, $email, $full = false){
+		$this->id = $id;
 		$this->title = $title;
+		$this->picture = $picture;
 		$this->details = $details;
 		$this->date = $date;
 		$this->time = $time;
@@ -132,7 +140,7 @@ class Event{
 									<div style=\"width:100%; height:28%;\"><h4 class=\"list-group-item-heading\">{$this->title}</h4></div>
 									<div style=\"width:6%; height:72%; float:left\"><img src=\"$this->picture\" alt=\"$this->picture\" height=\"60\" width=\"60\"></div>
 									<div style=\"width:94%; height:72%; float:right\"><p class=\"list-group-item-text\">$shortDetails</p></div>
-								</div>", "list-group-item", "index.php?event_full={$this->attributes}", "a")."";
+								</div>", "list-group-item", "index.php?event_full={$this->id}", "a")."";
 		}
 		
 	}
