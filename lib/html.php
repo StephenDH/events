@@ -150,6 +150,14 @@ class Event{
 	}
 }
 
+function postVar($variable){
+	$result ="";
+	if (isset($_POST[$variable])) {
+		$result = $_POST[$variable];
+	}
+	return $result;
+}
+
 function string_shorten($text, $char) {
     $text = substr($text, 0, $char); //First chop the string to the given character length
     if(substr($text, 0, strrpos($text, ' '))!='') $text = substr($text, 0, strrpos($text, ' ')); //If there exists any space just before the end of the chopped string take upto that portion only.
