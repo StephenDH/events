@@ -1,6 +1,6 @@
 <?php 
 $css = new Link(array("rel" => "stylesheet", "type" => "text/css", "href" => "css/bootstrap.css"));
-$title = new Title("events");
+$titlePage = new Title("events");
 
 class HtmlElement{
 	protected $tag = "p";
@@ -174,7 +174,7 @@ class Event{
 									<div style=\"width:100%; height:28%;\"><h4 class=\"list-group-item-heading\">{$this->title}</h4></div>
 									<div style=\"width:6%; height:72%; float:left\"><img src=\"$this->picture\" alt=\"$this->picture\" height=\"60\" width=\"60\"></div>
 									<div style=\"width:94%; height:72%; float:right\"><p class=\"list-group-item-text\">$shortDetails</p></div>
-								</div>", "list-group-item", "index.php?event_full={$this->id}", "a")."";
+								</div>", "list-group-item", "index.php?event_number={$this->id}", "a")."";
 		}
 		
 	}
@@ -184,8 +184,13 @@ class Event{
 	}
 }
 
-function post_var($variable){
-	$result ="";
+function post_var($variable,$type="default"){
+	if($type=="default"){
+		$result ="";
+	}elseif ($type=="bool") {
+		$result = false;
+	}
+	
 	if (isset($_POST[$variable])) {
 		$result = $_POST[$variable];
 	}
