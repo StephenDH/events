@@ -105,6 +105,15 @@ class Link extends HtmlVoidElement{
 	}
 }
 
+class Break extends HtmlVoidElement{
+	public function __construct($attributes = array()){
+		$this->tag = "br";
+		parent::__construct($attributes);
+	}
+}
+
+class
+
 class MyList extends HtmlElement{
 	public function __construct($items = array(), $class, $ordered = false, $attributes = array()){
 		$content="";
