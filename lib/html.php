@@ -1,4 +1,6 @@
 <?php 
+$css = new Link(array("rel" => "stylesheet", "type" => "text/css", "href" => "css/bootstrap.css"));
+$title = new Title("events");
 
 class HtmlElement{
 	protected $tag = "p";
@@ -78,6 +80,12 @@ class Form extends HtmlElement{
 		parent::__construct($content,$attributes);
 	}
 }
+class Title extends HtmlElement{
+	public function __construct($content, $attributes = array()){
+		$this->tag = "title";
+		parent::__construct($content,$attributes);
+	}
+}
 
 class Img extends HtmlVoidElement{
 	public function __construct($source, $alter, $width, $height, $attributes = array()){
@@ -86,6 +94,13 @@ class Img extends HtmlVoidElement{
 		$attributes["alter"] = $alter;
 		$attributes["width"] = $width;
 		$attributes["height"] = $height;
+		parent::__construct($attributes);
+	}
+}
+
+class Link extends HtmlVoidElement{
+	public function __construct($attributes = array()){
+		$this->tag = "link";
 		parent::__construct($attributes);
 	}
 }
@@ -150,7 +165,7 @@ class Event{
 	}
 }
 
-function postVar($variable){
+function post_var($variable){
 	$result ="";
 	if (isset($_POST[$variable])) {
 		$result = $_POST[$variable];
