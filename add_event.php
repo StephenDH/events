@@ -3,7 +3,34 @@
 
  	$content = new Div(
  		new Form(
+ 			new Br().
+ 			new Div(
+ 					new Span(
+ 							new Span(
+ 									""
+ 								,array("class" => "glyphicon glyphicon-th-list"))
+ 						,array("class" => "input-group-addon")).
+ 					new Input("title", "text", array("placeholder" => "Event name", "class" => "form-control"))
+ 				,array("class" => "input-group")).
 
+ 			new Br().
+ 			new Div(
+ 					new Span(
+ 							new Span(
+ 									""
+ 								,array("class" => "glyphicon glyphicon-calendar"))
+ 						,array("class" => "input-group-addon")).
+ 					new Input("datum", "date", array("placeholder" => "Event name", "class" => "form-control")).
+ 					new Span(
+ 							new Span(
+ 									""
+ 								,array("class" => "glyphicon glyphicon-time"))
+ 						,array("class" => "input-group-addon")).
+ 					new Input("tijd", "time", array("placeholder" => "Event name", "class" => "form-control"))
+ 				,array("class" => "input-group")).
+
+ 			new Br().
+ 			new TextArea("", "details", "40", "5", "text", array("placeholder" => "Event details", "class" => "form-control"))
  		,array("action"=>"index.php", "method"=>"post"))
  	,array("class" => "container"));
   ?>
@@ -13,12 +40,13 @@
  	<?php echo $title.$css ?>
  </head>
  <body>
+ 	<?php echo $content ?>
  	<div class = "container">
  		<form action="index.php" method="post">
 	 		<br>
 	 		<div class="input-group">
 	  			<span class="input-group-addon"><span class="glyphicon glyphicon-th-list"></span></span>
-	 		<input type="text" name="title" placeholder="Event name" class="form-control">
+	 			<input type="text" name="title" placeholder="Event name" class="form-control">
 	 		</div>
 
 	 		<br>
