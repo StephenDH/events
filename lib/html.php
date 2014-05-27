@@ -80,9 +80,21 @@ class Form extends HtmlElement{
 		parent::__construct($content,$attributes);
 	}
 }
+
 class Title extends HtmlElement{
 	public function __construct($content, $attributes = array()){
 		$this->tag = "title";
+		parent::__construct($content,$attributes);
+	}
+}
+
+class TextArea extends HtmlElement{
+	public function __construct($content, $name, $cols, $rows, $type = "text", $attributes = array()){
+		$this->tag = "textarea";
+		$attributes["name"] = $name;
+		$attributes["type"] = $type;
+		$attributes["cols"] = $cols;
+		$attributes["rows"] = $rows;
 		parent::__construct($content,$attributes);
 	}
 }
@@ -105,7 +117,7 @@ class Link extends HtmlVoidElement{
 	}
 }
 
-class Break extends HtmlVoidElement{
+class Br extends HtmlVoidElement{
 	public function __construct($attributes = array()){
 		$this->tag = "br";
 		parent::__construct($attributes);
