@@ -112,8 +112,6 @@ class Break extends HtmlVoidElement{
 	}
 }
 
-class
-
 class MyList extends HtmlElement{
 	public function __construct($items = array(), $class, $ordered = false, $attributes = array()){
 		$content="";
