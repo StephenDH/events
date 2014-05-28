@@ -107,10 +107,10 @@ class TextArea extends HtmlElement{
 }
 
 class Img extends HtmlVoidElement{
-	public function __construct($source, $alter, $width, $height, $attributes = array()){
+	public function __construct($src, $alt, $width, $height, $attributes = array()){
 		$this->tag ="img";
-		$attributes["source"] = $source;
-		$attributes["alter"] = $alter;
+		$attributes["src"] = $src;
+		$attributes["alt"] = $alt;
 		$attributes["width"] = $width;
 		$attributes["height"] = $height;
 		parent::__construct($attributes);
