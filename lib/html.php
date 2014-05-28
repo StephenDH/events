@@ -58,6 +58,13 @@ class Span extends HtmlElement{
 	}
 }
 
+class HyperLink extends HtmlElement{
+	public function __construct($content, $attributes = array()){
+		$this->tag = "a";
+		parent::__construct($content,$attributes);
+	}
+}
+
 class Button extends HtmlElement{
 	public function __construct($content, $attributes = array()){
 		$this->tag = "button";
@@ -169,8 +176,8 @@ class Event{
 		if($this->full){
 			return new Div(
 					new Heading("{$this->title}").
-					new Paragraph("{$this->details}") 
-
+					new Paragraph("{$this->details}").
+					new Paragraph(new Link())
 				,array("class" => "jumbotron"))."";
 		}else{
 			$shortDetails = string_shorten($this->details, 400);
