@@ -167,7 +167,11 @@ class Event{
 
 	public function __toString(){
 		if($this->full){
-			return "";
+			return new Div(
+					new Heading("{$this->title}").
+					new Paragraph("{$this->details}") 
+
+				,array("class" => "jumbotron"))."";
 		}else{
 			$shortDetails = string_shorten($this->details, 400);
 			return new ListItem("<div style=\"height:85px\">
@@ -193,6 +197,20 @@ function post_var($variable,$type="default"){
 	
 	if (isset($_POST[$variable])) {
 		$result = $_POST[$variable];
+	}
+	return $result;
+}
+
+
+function get_var($variable,$type="default"){
+	if($type=="default"){
+		$result ="";
+	}elseif ($type=="bool") {
+		$result = false;
+	}
+	
+	if (isset($_GET[$variable])) {
+		$result = $_GET[$variable];
 	}
 	return $result;
 }
