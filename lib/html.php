@@ -175,11 +175,24 @@ class Event{
 	public function __toString(){
 		if($this->full){
 			$detailsnl = nl2br($this->details);
-
+			$dateDisplay = date("F j, Y", strtotime($this->date));
 			return new Div(
-					new Img("{$this->picture}", "{$this->picture}", "48px", "48px").
-					new Heading("{$this->title}").
+					new Div(
+						new Img("{$this->picture}", "{$this->picture}", "72px", "72px",array("style"=>"float:left")).
+						new Heading("{$this->title}")
+					).
 					new Paragraph("$detailsnl").
+					new Div(
+						new Div(
+							new Heading("Information","3",array("class"=>"panel-title"))
+						,array("class" => "panel-heading")).
+						new MyList([
+								new ListItem("Date: $dateDisplay","list-group-item").
+								new ListItem("Time: {$this->time}","list-group-item").
+								new ListItem("Email: {$this->email}","list-group-item").
+								new ListItem("Website: {$this->website}","list-group-item", "{$this->website}", "a")
+							],"list-group")
+					,array("class" => "panel panel-default")).
 					new Paragraph(new HyperLink("Edit", array("class"=>"btn btn-primary btn-lg", "role"=>"button")))
 				,array("class" => "jumbotron"))."";
 		}else{
