@@ -72,11 +72,6 @@
 			, array("class" => "btn btn-default btn-lg", "type" => "button", "onclick" => "window.location.href='/EventsV2/add_event.php'"))
 		, array("class" => "container"));		
 	}
-	// $event = $events[$event_full];
-	// $event->showFull();
-	// $content = $events[$event_full];
-
-	
 	
  ?>
  <!DOCTYPE html>
