@@ -13,7 +13,7 @@
 	$website = post_var("website");
 	$email = post_var("email");
 
-	$event_number = post_var("event_number");
+	$event_number = get_var("event_number");
 
 	//Database variables
 	$host = "localhost";
@@ -33,17 +33,29 @@
 		$STH->execute($events_array);
 	}
 
-	$update = empty($event_number);
+	//var_dump($event_number);
+	$update = !empty($event_number);
 	if ($update) {
 		$STH = $DBH->query('SELECT * FROM evenementen WHERE id='.$event_number);
-		$content="test";
+		$STH->setFetchMode(PDO::FETCH_ASSOC);
+		$event_array = $STH->fetchAll();
+
+		//Fill array with events
+		$events = array();
+		foreach ($event_array as $value) {
+			$event = new event($value["id"], $value["title"], $value["picture"], $value["details"], $value["datum"], $value["tijd"], $value["website"], $value["email"]);
+			//var_dump($event);
+		}
+		$event->showFull();
+		
+		$content=new Div($event, array("class" => "container"));
 	}else{
 		//Get all events
 		$STH = $DBH->query('SELECT * FROM evenementen');
 		$STH->setFetchMode(PDO::FETCH_ASSOC);
 		$event_array = $STH->fetchAll();
 
-		//Fill array with events
+		//Fill event with array and add event to a array.
 		$events = array();
 		foreach ($event_array as $value) {
 			$event = new event($value["id"], $value["title"], $value["picture"], $value["details"], $value["datum"], $value["tijd"], $value["website"], $value["email"]);
