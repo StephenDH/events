@@ -174,18 +174,29 @@ class Event{
 
 	public function __toString(){
 		if($this->full){
+			$detailsnl = nl2br($this->details);
+
 			return new Div(
+					new Img("{$this->picture}", "{$this->picture}", "48px", "48px").
 					new Heading("{$this->title}").
-					new Paragraph("{$this->details}").
-					new Paragraph(new Link())
+					new Paragraph("$detailsnl").
+					new Paragraph(new HyperLink("Edit", array("class"=>"btn btn-primary btn-lg", "role"=>"button")))
 				,array("class" => "jumbotron"))."";
 		}else{
 			$shortDetails = string_shorten($this->details, 400);
-			return new ListItem("<div style=\"height:85px\">
-									<div style=\"width:100%; height:28%;\"><h4 class=\"list-group-item-heading\">{$this->title}</h4></div>
-									<div style=\"width:6%; height:72%; float:left\"><img src=\"$this->picture\" alt=\"$this->picture\" height=\"60\" width=\"60\"></div>
-									<div style=\"width:94%; height:72%; float:right\"><p class=\"list-group-item-text\">$shortDetails</p></div>
-								</div>", "list-group-item", "index.php?event_number={$this->id}", "a")."";
+			return new ListItem(
+					new Div(
+							new Div(
+									new Heading("{$this->title}","4",array("class"=>"list-group-item-heading"))
+								,array("style"=>"width:100%; height:28%;")).
+							new Div(
+									new Img("{$this->picture}", "{$this->picture}", "60", "60")
+								,array("style"=>"width:6%; height:72%; float:left")).
+							new Div(
+									new Paragraph("$shortDetails", array("class"=>"list-group-item-text"))
+								,array("style"=>"width:94%; height:72%; float:right"))
+						,array("style"=>"height:85px"))
+				, "list-group-item", "index.php?event_number={$this->id}", "a")."";
 		}
 		
 	}
