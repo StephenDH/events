@@ -13,6 +13,9 @@
 	$website = post_var("website");
 	$email = post_var("email");
 
+	$id = get_var("id");
+	$save = get_var("save");
+
 	$event_number = get_var("event_number");
 
 	//Database variables
@@ -27,10 +30,29 @@
 
 	//Add an event
 	$update = !(empty($title) && empty($picture) && empty($details) && empty($date) && empty($time) && empty($website) && empty($email));
-	if ($update){
+	if ($update && empty($save)){
 		$events_array = array("title"=>$title,"picture"=>$picture,"details"=>$details,"datum"=>$datum,"tijd"=>$tijd,"website"=>$website,"email"=>$email);
 		$STH = $DBH->prepare("INSERT INTO evenementen (title, picture, details, datum, tijd, website, email) values (:title, :picture, :details, :datum, :tijd, :website, :email)");
 		$STH->execute($events_array);
+	}else if($update && !empty($save) && !empty($id)){
+		$sql = "UPDATE evenementen SET 	title = :title, 
+            						picture = :picture, 
+            						details = :details,  
+            						datum = :datum,
+            						tijd = :tijd,  
+            						website = :website,
+            						email = :email  
+            	WHERE 				id = :id";
+		$STH = $DBH->prepare($sql);                                  
+		$STH->bindParam(':title', $title, PDO::PARAM_STR);       
+		$STH->bindParam(':picture', $picture, PDO::PARAM_STR);    
+		$STH->bindParam(':details', $details, PDO::PARAM_STR);
+		$STH->bindParam(':datum', $datum, PDO::PARAM_STR);
+		$STH->bindParam(':tijd', $tijd, PDO::PARAM_STR); 
+		$STH->bindParam(':website', $website, PDO::PARAM_STR);   
+		$STH->bindParam(':email', $email, PDO::PARAM_STR); 
+		$STH->bindParam(':id', $id, PDO::PARAM_INT);   
+		$STH->execute(); 
 	}
 
 	//var_dump($event_number);

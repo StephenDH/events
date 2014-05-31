@@ -193,7 +193,7 @@ class Event{
 								new ListItem("Website: {$this->website}","list-group-item", "{$this->website}", "a")
 							],"list-group")
 					,array("class" => "panel panel-default")).
-					new Paragraph(new HyperLink("Edit", array("class"=>"btn btn-primary btn-lg", "role"=>"button")))
+					new Paragraph(new HyperLink("Edit", array("class"=>"btn btn-primary btn-lg", "role"=>"button", "onclick" => "window.location.href='/EventsV2/add_event.php?event_number={$this->id}'")))
 				,array("class" => "jumbotron"))."";
 		}else{
 			$shortDetails = string_shorten($this->details, 400);
