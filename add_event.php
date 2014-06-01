@@ -1,20 +1,12 @@
  <?php 
  	require_once("lib/html.php");
+ 	require_once("database.php");
 
  	$event_number = get_var("event_number");
 
  	$update = !empty($event_number);
  	if ($update) {
-		//Database variables
-		$host = "localhost";
-		$dbname = "events";
-		$user = "root";
-		$pass = "";
-
-		//Open database
-		$DBH = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
-		$DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
+ 		//Set values
  		$STH = $DBH->query('SELECT * FROM evenementen WHERE id='.$event_number);
 		$STH->setFetchMode(PDO::FETCH_ASSOC);
 		$event_array = $STH->fetchAll();
@@ -30,8 +22,10 @@
 			$emailValue		= $value["email"];	
 		}
 
+		//get
 		$save = "?save=true&id=$id";
  	}else{
+ 		//default
  		$titleValue		= "";
 		$pictureValue	= "";
 		$detailsValue	= "";

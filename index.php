@@ -1,6 +1,8 @@
 <?php 
 	//Library and errors
 	require_once("lib/html.php");
+	require_once("database.php");
+
 	error_reporting(E_ALL);   
 	ini_set('display_errors', 1);
 
@@ -18,23 +20,16 @@
 
 	$event_number = get_var("event_number");
 
-	//Database variables
-	$host = "localhost";
-	$dbname = "events";
-	$user = "root";
-	$pass = "";
-
-	//Open database
-	$DBH = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
-	$DBH->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
-	//Add an event
+	
 	$update = !(empty($title) && empty($picture) && empty($details) && empty($date) && empty($time) && empty($website) && empty($email));
 	if ($update && empty($save)){
+		//Add an event
 		$events_array = array("title"=>$title,"picture"=>$picture,"details"=>$details,"datum"=>$datum,"tijd"=>$tijd,"website"=>$website,"email"=>$email);
 		$STH = $DBH->prepare("INSERT INTO evenementen (title, picture, details, datum, tijd, website, email) values (:title, :picture, :details, :datum, :tijd, :website, :email)");
 		$STH->execute($events_array);
+
 	}else if($update && !empty($save) && !empty($id)){
+		// Edit event
 		$sql = "UPDATE evenementen SET 	title = :title, 
             						picture = :picture, 
             						details = :details,  
